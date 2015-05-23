@@ -14,7 +14,7 @@ WORKER_NUM = 8
 class ContentRetriever(ContentHandler):
     def __init__(self, page_handler):
         self.handler = page_handler
-        self.docs = mp.Queue(10)
+        self.docs = mp.Queue(40)
         self.doc_id = ""
         self.doc_url = ""
         self.encoded_content = ""
