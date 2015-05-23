@@ -14,8 +14,10 @@ class PageHandler:
         self.cleaner.style = True
 
     # the main consumer
-    def handlePage(self, doc_id, doc_url, doc_html_enc):
-        self.stats.incrementWatchedDocumentNumber()
+    def handlePage(self, doc_id, doc_url, doc_html_enc, lock):
+        with lock:
+            # print(self.stats.watched_document_number)
+            self.stats.incrementWatchedDocumentNumber()
         doc_html = b64decode(doc_html_enc)
         try:
             inf = DocumentInfo(doc_id, doc_url, str(doc_html, "utf-8"), self.cleaner)
@@ -37,11 +39,11 @@ class PageHandler:
         except RuntimeError:
             print("Runtime error in", doc_id)
             return
-        # lock.acquire()
+        lock.acquire()
         try:
             self.stats.feed(inf)
         except KeyError:
             print("Key error in ", doc_id)
-        # finally:
-        #     lock.release()
+        finally:
+            lock.release()
 

@@ -16,10 +16,9 @@ class DocumentInfo:
         # init class variables
         # text values
         self.features["id"] = doc_id
-        self.features["url"] = doc_url
+        self.features["url"] = sub("[\r\n\t]", " ", doc_url)
         self.doc_html = doc_html
         self.doc_url = doc_url
-        self.isValid = True
         # representation for html parser
         self.code = html.fromstring(doc_html)
         # try:
@@ -40,7 +39,9 @@ class DocumentInfo:
             print("Problem with title in docid = {0}".format(self.features["id"]))
         except TypeError:
             print("Problem with title in docid = {0}".format(self.features["id"]))
-            
+        except IndexError:
+            print("Problem with title in docid = {0}".format(self.features["id"]))
+
     def setTable(self):
         # some bug
         select_tables = cssselect.CSSSelector("table")
@@ -52,7 +53,8 @@ class DocumentInfo:
             # print(t)
             # print(txt)
             symbol_count += len(txt)
-        self.features["fraction_of_table"] = float(symbol_count) / self.features["size_of_text"]
+        if not self.features["size_of_text"] == 0:
+            self.features["fraction_of_table"] = float(symbol_count) / self.features["size_of_text"]
 
     def precompute(self):
         self.features["size_with_markup"] = len(self.doc_html)
@@ -82,9 +84,9 @@ class DocumentInfo:
                 pass
             # internal relative link
             elif base_domain == domain_name or not domain_name:
-                internal.append(link)
+                internal.append(sub("[\r\n\t]", " ", link))
             else:
-                external.append(link)
+                external.append(sub("[\r\n\t]", " ", link))
         self.features["internal_links"] = internal
         self.features["external_links"] = external
 
@@ -99,11 +101,11 @@ class AggregatedStatistics:
         self.dictionary = defaultdict(int)
         self.watched_document_number = 0
         self.finished = False
+        # print("file opened")
         self.output_file = open("collection_task6.tsv", "w")
 
     # not thread safe
     def feed(self, doc_info):
-        self.watched_document_number = 0
         # if self.watched_document_number > 10:
         #     self.output_file.close()
         fts = doc_info.getDocumentFeatures()
