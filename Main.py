@@ -8,7 +8,7 @@ from PageHandler import PageHandler
 from time import time
 
 fileName = "big_by.xml"
-# fileName = "test_by.xml"
+fileName = "test_by.xml"
 handler = ContentRetriever(PageHandler())
 f = open(fileName, encoding="cp1251")
 now = time()
