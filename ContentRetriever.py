@@ -8,7 +8,7 @@ from time import sleep
 import multiprocessing as mp
 
 
-WORKER_NUM = 4
+WORKER_NUM = 8
 
 
 class ContentRetriever(ContentHandler):
