@@ -119,6 +119,7 @@ class AggregatedStatistics:
         self.output_file.write(line + "\n")
 
     def __str__(self):
+        # return str(self.watched_document_number)
         return "Handled: {0} documents of {1}".format(self.correctly_handled_docs, self.watched_document_number)
 
     def incrementWatchedDocumentNumber(self):

@@ -8,7 +8,7 @@ from time import sleep
 import multiprocessing as mp
 
 
-WORKER_NUM = 5
+WORKER_NUM = 4
 
 
 class ContentRetriever(ContentHandler):
@@ -64,8 +64,10 @@ class ContentRetriever(ContentHandler):
             #     pass
             self.docs.put((self.doc_id, self.doc_url, self.encoded_content))
             # print("Put element into the queue!")
-            if int(self.doc_id) % 1000 == 0:
+            if int(self.doc_id) % 10000 == 0:
                 print(self.doc_id)
+                # print(str(self.handler.stats))
+                # self.handler.stats.summarize()
             # self.handleDocs(self.docs)
 
     # consumer
