@@ -71,16 +71,26 @@ def parse(morph, queue, stopwords, stops_num):
             freqs[w] += 1
             # calculate entropy
             entropy = 0
-        for w in freqs.keys():
-            probabil = freqs[w] / word_count
-            entropy -= probabil * log2(probabil)
+        try:
+            for w in freqs.keys():
+                probabil = freqs[w] / word_count
+                entropy -= probabil * log2(probabil)
+        except ZeroDivisionError:
+            entropy = 0
         # deal with stopwords
         for word in list_of_words:
             if word in stopwords:
                 sw.add(word)
                 num_of_stops += 1
-        frac_stops = len(sw) / stops_num
-        result_list = [features[0], str(frac_stops), str(num_of_stops / len(list_of_words)), str(entropy)]
+        try:
+            frac_stops = len(sw) / stops_num
+        except ZeroDivisionError:
+            frac_stops = 0
+        try:
+            stops_percentage = num_of_stops / len(list_of_words)
+        except ZeroDivisionError:
+            stops_percentage = 0
+        result_list = [features[0], str(frac_stops), str(stops_percentage), str(entropy)]
         log_info(" ".join(result_list) + "\n")
 
 
