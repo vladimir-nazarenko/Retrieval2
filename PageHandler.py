@@ -16,7 +16,7 @@ class PageHandler:
         self.cleaner = Cleaner()
         self.cleaner.comments = True
         self.cleaner.style = True
-        self.errors = open("errored", "w")
+        self.errors = open("errored", "wb")
         self.write_lock = Lock()
         self.inf = None
 
@@ -70,5 +70,6 @@ class PageHandler:
 
 def log_info(info, lock, out, id):
     with lock:
-        out.write("ID OF THE DOCUMENT: " + str(id))
-        out.write(info.decode())
+        s = "ID OF THE DOCUMENT: " + str(id)
+        out.write(s.encode())
+        out.write(info)
