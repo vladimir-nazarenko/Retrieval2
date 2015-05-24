@@ -40,8 +40,9 @@ class PageHandler:
         try:
             self.inf = DocumentInfo(doc_id, doc_url, html_without_unicode, self.cleaner)
         except ValueError:
-            print("Value error in " + doc_id)
-            traceback.print_exc(file=sys.stdout)
+            print("Value error in DocumentInfo call " + doc_id)
+            # traceback.print_exc(file=sys.stdout)
+            log_info(doc_html, self.write_lock, self.errors, doc_id)
             return
         except RuntimeError:
             print("Runtime error in", doc_id)
