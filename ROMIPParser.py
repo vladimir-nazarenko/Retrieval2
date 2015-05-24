@@ -6,6 +6,7 @@ from lxml import html, cssselect, etree
 from lxml.etree import ParseError
 from lxml.html.clean import Cleaner
 from io import StringIO
+from lxml.html import HTMLParser
 from urllib.parse import urlparse
 
 
@@ -31,16 +32,19 @@ class DocumentInfo:
     def setTitle(self):
         try:
             tag = self.code.xpath("//title")
-            if tag is None:
+            if tag is None or tag[0].text is None:
                 self.features["title"] = ""
             else:
                 self.features["title"] = sub("[\r\n\t]", " ", tag[0].text)
         except AttributeError:
-            print("Problem with title in docid = {0}".format(self.features["id"]))
+            print("No title in docid = {0}".format(self.features["id"]))
+            self.features["title"] = ""
         except TypeError:
-            print("Problem with title in docid = {0}".format(self.features["id"]))
+            print("No title in docid = {0}".format(self.features["id"]))
+            self.features["title"] = ""
         except IndexError:
-            print("Problem with title in docid = {0}".format(self.features["id"]))
+            print("No title in docid = {0}".format(self.features["id"]))
+            self.features["title"] = ""
 
     def setTable(self):
         # some bug

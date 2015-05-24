@@ -21,7 +21,6 @@ class ContentRetriever(ContentHandler):
         self.current_tag = ""
         self.lock = mp.Lock()
         self.workers = [mp.Process(target=self.handleDocs, args=(self.docs, self.lock, i,)) for i in range(WORKER_NUM)]
-        # self.errors = queue.Queue(100)
         for w in self.workers:
             w.start()
         # for _ in range(WORKER_NUM):
@@ -87,3 +86,4 @@ class ContentRetriever(ContentHandler):
 
     def startDocument(self):
         print("Started analysing")
+
