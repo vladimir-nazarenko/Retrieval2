@@ -60,8 +60,8 @@ def parse(morph, queue, stopwords, stops_num):
         features = line.split("\t")
         txt = features[3]
         # word_count = int(features[4])
-        list_of_words = [morph.parse(w)[0].normal_form for w in findall("[a-zA-Z0-9а-яА-Я]+", txt)]
-        # list_of_words = findall("[a-zA-Z0-9а-яА-Я]+", txt)
+        # list_of_words = [morph.parse(w)[0].normal_form for w in findall("[a-zA-Z0-9а-яА-Я]+", txt)]
+        list_of_words = findall("[a-zA-Z0-9а-яА-Я]+", txt)
         word_count = len(list_of_words)
         # print(list_of_words)
         sw = set()
