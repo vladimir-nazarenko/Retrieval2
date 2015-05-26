@@ -68,8 +68,8 @@ def generate_trec_data2008(judgement_file, index):
                 # cur stores the list of tuples
                 for row in cur:
                     # print("cur not empty 2008")
-                    url = row[0]
-                    weight = row[1]
+                    url = row[0].strip()
+                    weight = row[1].strip()
                     if url in doc_features[task].keys():
                         # add feature for the document "url" in the query "task"
                         print(part + ranker + url)
@@ -138,8 +138,8 @@ def generate_trec_data2009(judgement_file, index):
                 cur.execute(preprocess_query(query_string))
                 # cur stores the list of tuples
                 for row in cur:
-                    doc_id = row[0]
-                    weight = row[1]
+                    doc_id = row[0].strip()
+                    weight = row[1].strip()
                     if doc_id in doc_features[task].keys():
                         # add feature for the document "url" in the query "task"
                         # print(ranker)
