@@ -4,8 +4,10 @@ from collections import defaultdict
 from time import time
 
 
+# mock function
 def stemURL(url):
-    return match("(http://)(w{0,3}\.?)([^/]*)", url).group(3)
+    return url
+    # return match("(http://)(w{0,3}\.?)([^/]*)", url).group(3)
 
 urls = "links"
 # urls = "testLinks"

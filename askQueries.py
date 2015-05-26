@@ -67,12 +67,12 @@ def generate_trec_data2008(judgement_file, index):
                 cur.execute(preprocess_query(query_string))
                 # cur stores the list of tuples
                 for row in cur:
-                    print("cur not empty 2008")
+                    # print("cur not empty 2008")
                     url = row[0]
                     weight = row[1]
                     if url in doc_features[task].keys():
                         # add feature for the document "url" in the query "task"
-                        # print(ranker)
+                        print(part + ranker + url)
                         doc_features[task][url][part + ranker] = weight
     print("writing file 2008")
     with open("train_set_2008", "w") as f:
