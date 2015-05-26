@@ -5,6 +5,16 @@ from xml.etree import ElementTree
 from collections import defaultdict
 
 
+def preprocess_query(query):
+    # no idea what it does
+    normal_string = query.replace("/", "\\\\/").replace("!", "\\\\!")
+    return normal_string.encode("utf8")
+
+
+def make_or_query(query):
+    return "|".join(query.replace("-", " ").strip().split())
+
+
 # Function generates the file of the following structure, defined in the file learning_feature_specification.txt
 def generate_trec_data2008(judgement_file, index):
     # stores the text of the query for each query id
@@ -49,9 +59,8 @@ def generate_trec_data2008(judgement_file, index):
         for ranker in rank_exprs:
             for part in ["title", "content"]:
                 query_string = "select url, weight() from {1} where match('@({3}){0}') limit 20 option ranker=expr('{2}')"\
-                    .format("|".join(task_queries[task].split()), index, ranker, part)
-                normal_string = query_string.replace("/", "\\\\/").replace("!", "\\\\!").replace("-", "").encode("utf8")
-                cur.execute(normal_string)
+                    .format(make_or_query(task_queries[task]), index, ranker, part)
+                cur.execute(preprocess_query(query_string))
                 # cur stores the list of tuples
                 for row in cur:
                     url = row[0]
@@ -119,9 +128,8 @@ def generate_trec_data2009(judgement_file, index):
         for ranker in rank_exprs:
             for part in ["title", "content"]:
                 query_string = "select id, weight() from {1} where match('@({3}){0}') limit 20 option ranker=expr('{2}')"\
-                    .format("|".join(task_queries[task].split()), index, ranker, part)
-                normal_string = query_string.replace("/", "\\\\/").replace("!", "\\\\!").replace("-", "").encode("utf8")
-                cur.execute(normal_string)
+                    .format(make_or_query(task_queries[task]), index, ranker, part)
+                cur.execute(preprocess_query(query_string))
                 # cur stores the list of tuples
                 for row in cur:
                     doc_id = row[0]
