@@ -35,4 +35,10 @@ wget http://sphinxsearch.com/files/dicts/en.pak
 mkdir ../dicts
 mv *.pak ../dicts/
 indexer --config sphinx.conf --all
+sudo service sphinxsearch stop
+sudo searchd --config sphinx.conf
+mkdir queries
+cd queries
+wget http://romip.ru/tasks/2008/web2008_adhoc.xml.bz2
+bzip2 web2008_adhoc.xml.bz2
 
