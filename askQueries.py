@@ -13,7 +13,7 @@ def preprocess_query(query):
 
 
 def make_or_query(query):
-    return "|".join(sub("[,\.\-\+<>\*]", " ", query).strip().split())
+    return "|".join(sub("[,\.\-\+<>\*\(\)\{\}\[\]]", " ", query).strip().split())
 
 
 # Function generates the file of the following structure, defined in the file learning_feature_specification.txt
