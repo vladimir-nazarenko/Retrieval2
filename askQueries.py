@@ -160,7 +160,7 @@ def generate_trec_data2009(judgement_file, index):
                                                            task, " ".join(result), features["doc_id"]))
 if __name__ == '__main__':
     names = ["or"]
-    for name in ["queries/2008{0}_relevant-minus_table.xml".format(n) for n in names]:
-        generate_trec_data2008(name, "morph")
     for name in ["queries/2009{0}_relevant-minus_table.xml".format(n) for n in names]:
         generate_trec_data2009(name, "morph")
+    for name in ["queries/2008{0}_relevant-minus_table.xml".format(n) for n in names]:
+        generate_trec_data2008(name, "morph")
