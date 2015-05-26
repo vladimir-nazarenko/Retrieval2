@@ -120,7 +120,7 @@ def generate_trec_data2009(judgement_file, index):
             for part in ["title", "content"]:
                 query_string = "select id, weight() from {1} where match('@({3}){0}') limit 20 option ranker=expr('{2}')"\
                     .format("|".join(task_queries[task].split()), index, ranker, part)
-                normal_string = query_string.replace("/", "\\\\/").replace("!", "\\\\!").encode("utf8")
+                normal_string = query_string.replace("/", "\\\\/").replace("!", "\\\\!").replace("-", "").encode("utf8")
                 cur.execute(normal_string)
                 # cur stores the list of tuples
                 for row in cur:

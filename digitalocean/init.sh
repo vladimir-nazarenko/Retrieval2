@@ -41,4 +41,10 @@ mkdir queries
 cd queries
 wget http://romip.ru/tasks/2008/web2008_adhoc.xml.bz2
 bzip2 web2008_adhoc.xml.bz2
-
+wget http://romip.ru/relevance-tables/2008/web-adhoc/by/or_relevant-minus_table.xml.gz
+gunzip or_relevant-minus_table.xml.gz
+mv or_relevant-minus_table.xml 2008or_relevant-minus_table.xml
+wget http://romip.ru/relevance-tables/2009/web-adhoc/by/or_relevant-minus_table.xml.gz
+gunzip or_relevant-minus_table.xml.gz
+mv or_relevant-minus_table.xml 2009or_relevant-minus_table.xml
+sudo pip3 install pymysql
