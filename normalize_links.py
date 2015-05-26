@@ -7,5 +7,6 @@ with open("linksasis.txt", "r") as f:
             document_links = f.readline()
             if not url_line:
                 break
-            urls = url_line[1:-2]
-            o.write("{" + urls + "}\n")
+            o.write(url_line)
+            links = document_links[1:-2]
+            o.write("{" + links + "}\n")
