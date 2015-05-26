@@ -3,6 +3,7 @@ __author__ = 'vladimir'
 import pymysql
 from xml.etree import ElementTree
 from collections import defaultdict
+from re import sub
 
 
 def preprocess_query(query):
@@ -12,7 +13,7 @@ def preprocess_query(query):
 
 
 def make_or_query(query):
-    return "|".join(query.replace("-", " ").strip().split())
+    return "|".join(sub("[,\.\-\+<>\*]", " ", query).strip().split())
 
 
 # Function generates the file of the following structure, defined in the file learning_feature_specification.txt
@@ -157,4 +158,4 @@ if __name__ == '__main__':
     for name in ["queries/2008{0}_relevant-minus_table.xml".format(n) for n in names]:
         generate_trec_data2008(name, "morph")
     for name in ["queries/2009{0}_relevant-minus_table.xml".format(n) for n in names]:
-        generate_trec_data2008(name, "morph")
+        generate_trec_data2009(name, "morph")
