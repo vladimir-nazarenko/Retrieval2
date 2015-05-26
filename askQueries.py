@@ -55,22 +55,26 @@ def generate_trec_data2008(judgement_file, index):
     # get feature vector
     # list of ranking expressions to use in sphinx search
     rank_exprs = ["bm25", "sum(tf_idf)", "sum(hit_count)"]
+    print("started getting features 2008")
     for task in doc_features.keys():
         # features from title
         for ranker in rank_exprs:
             for part in ["title", "content"]:
                 query_string = "select url, weight() from {1} where match('@({3}){0}') limit 20 option ranker=expr('{2}')"\
                     .format(make_or_query(task_queries[task]), index, ranker, part)
+                # query_string = "select url, weight() from {1} where match('{0}') limit 5 option ranker=expr('{2}')"\
+                #     .format(make_or_query(task_queries[task]), index, ranker, part)
                 cur.execute(preprocess_query(query_string))
                 # cur stores the list of tuples
                 for row in cur:
+                    print("cur not empty 2008")
                     url = row[0]
                     weight = row[1]
                     if url in doc_features[task].keys():
                         # add feature for the document "url" in the query "task"
                         # print(ranker)
                         doc_features[task][url][part + ranker] = weight
-
+    print("writing file 2008")
     with open("train_set_2008", "w") as f:
         for task, docs in sorted(doc_features.items(), key=lambda pair: pair[0]):
             for url, features in docs.items():
@@ -124,6 +128,7 @@ def generate_trec_data2009(judgement_file, index):
     # get feature vector
     # list of ranking expressions to use in sphinx search
     rank_exprs = ["bm25", "sum(tf_idf)", "sum(hit_count)"]
+    print("generating features 2009")
     for task in doc_features.keys():
         # features from title
         for ranker in rank_exprs:
@@ -139,7 +144,7 @@ def generate_trec_data2009(judgement_file, index):
                         # add feature for the document "url" in the query "task"
                         # print(ranker)
                         doc_features[task][doc_id][part + ranker] = weight
-
+    print("writing file 2009")
     with open("test_set_2009", "w") as f:
         for task, docs in sorted(doc_features.items(), key=lambda pair: pair[0]):
             for doc_id, features in docs.items():
