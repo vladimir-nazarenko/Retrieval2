@@ -8,4 +8,4 @@ with open("linksasis.txt", "r") as f:
             if not url_line:
                 break
             urls = url_line[1:-2]
-            o.write("\{{0}\}\n".format(urls))
+            o.write("{" + urls + "}\n")
