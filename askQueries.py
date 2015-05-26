@@ -69,7 +69,7 @@ def generate_trec_data2008(judgement_file, index):
                 for row in cur:
                     # print("cur not empty 2008")
                     url = row[0].strip()
-                    weight = row[1].strip()
+                    weight = row[1]
                     if url in doc_features[task].keys():
                         # add feature for the document "url" in the query "task"
                         print(part + ranker + url)
@@ -119,7 +119,7 @@ def generate_trec_data2009(judgement_file, index):
                 else:
                     raise Exception("Undefined relevance: " + doc_rel)
                 query_id = int(ch.attrib["id"][3:])
-                doc_id = judgement.attrib["id"]
+                doc_id = int(judgement.attrib["id"])
                 features = {"doc_id": doc_id, "relevance": rel}
                 doc_features[query_id][doc_id] = features
     doc_retrieved = defaultdict(list)
@@ -138,8 +138,8 @@ def generate_trec_data2009(judgement_file, index):
                 cur.execute(preprocess_query(query_string))
                 # cur stores the list of tuples
                 for row in cur:
-                    doc_id = row[0].strip()
-                    weight = row[1].strip()
+                    doc_id = int(row[0])
+                    weight = row[1]
                     if doc_id in doc_features[task].keys():
                         # add feature for the document "url" in the query "task"
                         # print(ranker)
